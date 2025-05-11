@@ -1,28 +1,46 @@
+import { cn } from "@/lib/utils";
 import React from "react";
-import { ModeToggle } from "../shared/mode-toggle";
-import { Separator } from "../ui/separator";
-import { SidebarTrigger } from "../ui/sidebar/primitive";
+import { SidebarTrigger } from "../ui/sidebar";
 
-interface HeaderProps {
-  title: string;
+interface HeaderProps extends React.HTMLAttributes<HTMLElement> {
+  fixed?: boolean;
+  ref?: React.Ref<HTMLElement>;
 }
 
-export const Header: React.FC<HeaderProps> = ({ title }) => {
+export const Header = ({
+  className,
+  fixed,
+  children,
+  ...props
+}: HeaderProps) => {
+  const [offset, setOffset] = React.useState(0);
+
+  React.useEffect(() => {
+    const onScroll = () => {
+      setOffset(document.body.scrollTop || document.documentElement.scrollTop);
+    };
+
+    // Add scroll listener to the body
+    document.addEventListener("scroll", onScroll, { passive: true });
+
+    // Clean up the event listener on unmount
+    return () => document.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <header className="group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">
-      <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <SidebarTrigger className="-ml-1" />
-        <Separator
-          orientation="vertical"
-          className="mx-2 data-[orientation=vertical]:h-4"
-        />
-
-        <h1 className="text-base font-medium">{title}</h1>
-
-        <div className="ml-auto">
-          <ModeToggle />
-        </div>
-      </div>
+    <header
+      className={cn(
+        "bg-background flex h-16 items-center gap-3 p-4 sm:gap-4",
+        fixed && "header-fixed peer/header fixed z-50 w-[inherit] rounded-md",
+        offset > 10 && fixed ? "shadow-sm" : "shadow-none",
+        className
+      )}
+      {...props}
+    >
+      <SidebarTrigger variant="outline" className="scale-125 sm:scale-100" />
+      {children}
     </header>
   );
 };
+
+Header.displayName = "Header";

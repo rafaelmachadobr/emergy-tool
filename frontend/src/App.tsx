@@ -1,7 +1,7 @@
 import React from "react";
 import { RouterProvider } from "react-router-dom";
 import { Toaster } from "sonner";
-import { ThemeProvider } from "./components/shared/theme-provider";
+import { ThemeProvider } from "./contexts/theme-context";
 import router from "./router";
 
 const App = () => {
