@@ -1,10 +1,9 @@
 services:
   db:
     image: postgres:16-alpine
-    container_name: emergy_postgres
     environment:
-      POSTGRES_USER: emergy_user
-      POSTGRES_PASSWORD: emergy_pass
+      POSTGRES_USER: emergy-tool
+      POSTGRES_PASSWORD: emergy-tool
       POSTGRES_DB: emergy_db
     ports:
       - "5432:5432"
