@@ -9,63 +9,50 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AuthContext } from "@/contexts/auth-context";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { HTMLAttributes, useState } from "react";
+import { HTMLAttributes, useContext, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-import { toast } from "sonner";
+import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 
 type UserAuthFormProps = HTMLAttributes<HTMLFormElement>;
 
 const formSchema = z.object({
-  email: z
+  username: z
     .string()
-    .min(1, { message: "Por favor, insira seu email" })
-    .email({ message: "Endereço de email inválido" }),
-  password: z
-    .string()
-    .min(1, {
-      message: "Por favor, insira sua senha",
-    })
-    .min(8, {
-      message: "A senha deve ter pelo menos 8 caracteres",
-    }),
+    .min(1, { message: "Por favor, insira seu nome de usuário" }),
+  password: z.string().min(1, {
+    message: "Por favor, insira sua senha",
+  }),
 });
 
 export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+  const navigate = useNavigate();
+  const { isAuthenticated, signIn } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      email: "",
+      username: "",
       password: "",
     },
   });
 
-  function onSubmit(data: z.infer<typeof formSchema>) {
+  async function onSubmit(data: z.infer<typeof formSchema>) {
     setIsLoading(true);
-    console.log(data);
 
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 3000);
+    await signIn(data);
 
-    toast(
-      <div>
-        <strong>Login realizado com sucesso!</strong>
-        <p>Você está logado.</p>
-      </div>,
-      {
-        duration: 3000,
-        action: {
-          label: "Fechar",
-          onClick: () => toast.dismiss(),
-        },
-      }
-    );
+    setIsLoading(false);
+
+    console.log("isAuthenticated", isAuthenticated);
+
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    }
   }
 
   return (
@@ -77,12 +64,12 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       >
         <FormField
           control={form.control}
-          name="email"
+          name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Nome de usuário</FormLabel>
               <FormControl>
-                <Input placeholder="nome@exemplo.com" {...field} />
+                <Input placeholder="Digite seu nome de usuário" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -95,7 +82,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <FormItem className="relative">
               <FormLabel>Senha</FormLabel>
               <FormControl>
-                <PasswordInput placeholder="********" {...field} />
+                <PasswordInput placeholder="Digite sua senha" {...field} />
               </FormControl>
               <FormMessage />
               <Link

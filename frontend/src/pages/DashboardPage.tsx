@@ -2,14 +2,21 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 import { Header } from "@/components/layout/header";
 import { ProfileDropdown } from "@/components/shared/profile-dropdown";
 import { ThemeSwitch } from "@/components/shared/theme-switch";
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
-import Cookies from "js-cookie";
+import { SidebarInset } from "@/components/ui/sidebar";
+import { AuthContext } from "@/contexts/auth-context";
+import { useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DashboardPage = () => {
-  const defaultOpen = Cookies.get("sidebar_state") !== "false";
+  const navigate = useNavigate();
+  const { isAuthenticated } = useContext(AuthContext);
+
+  if (!isAuthenticated) {
+    navigate("/login");
+  }
 
   return (
-    <SidebarProvider defaultOpen={defaultOpen}>
+    <>
       <AppSidebar />
       <SidebarInset>
         <Header>
@@ -24,7 +31,7 @@ const DashboardPage = () => {
           </div>
         </div>
       </SidebarInset>
-    </SidebarProvider>
+    </>
   );
 };
 
