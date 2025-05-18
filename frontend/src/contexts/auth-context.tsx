@@ -52,6 +52,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
       setUser({ token });
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
+      toast.success("Logado com sucesso!");
     } catch (error) {
       const err = error as AxiosError;
 
