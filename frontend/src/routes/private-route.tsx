@@ -1,14 +1,18 @@
-import { SidebarProvider } from "@/components/ui/sidebar";
-import { useSidebarOpen } from "@/hooks/use-sidebar";
+import { PrivateLayout } from "@/components/layout/private-layout";
+import { useAuth } from "@/hooks/use-auth";
+import { Navigate, useLocation } from "react-router-dom";
 
 type PrivateRouteProps = {
   children: JSX.Element;
 };
 
 export function PrivateRoute({ children }: PrivateRouteProps) {
-  const isSidebarOpen = useSidebarOpen();
+  const { isAuthenticated } = useAuth();
+  const location = useLocation();
 
-  return (
-    <SidebarProvider defaultOpen={isSidebarOpen}>{children}</SidebarProvider>
-  );
+  if (!isAuthenticated) {
+    return <Navigate to="/login" state={{ from: location }} replace />;
+  }
+
+  return <PrivateLayout>{children}</PrivateLayout>;
 }

@@ -23,9 +23,9 @@ type AuthProviderProps = {
   children: ReactNode;
 };
 
-export const AuthContext = createContext({} as AuthContextData);
+const AuthContext = createContext({} as AuthContextData);
 
-export function AuthProvider({ children }: AuthProviderProps) {
+function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps | undefined>(undefined);
   const isAuthenticated = !!user;
 
@@ -46,11 +46,12 @@ export function AuthProvider({ children }: AuthProviderProps) {
       Cookies.set("token", token, {
         expires: 30,
         path: "/",
+        secure: true,
+        sameSite: "strict",
       });
 
       setUser({ token });
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
-      toast.success("Logado com sucesso!");
     } catch (error) {
       const err = error as AxiosError;
 
@@ -85,3 +86,5 @@ export function AuthProvider({ children }: AuthProviderProps) {
     </AuthContext.Provider>
   );
 }
+
+export { AuthContext, AuthProvider };

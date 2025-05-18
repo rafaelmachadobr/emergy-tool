@@ -7,18 +7,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AuthContext } from "@/contexts/auth-context";
-import { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useContext(AuthContext);
-
-  if (isAuthenticated) {
-    navigate("/dashboard");
-  }
-
   return (
     <main className="bg-background container grid h-svh max-w-none items-center justify-center">
       <div className="mx-auto flex w-full flex-col justify-center space-y-2 py-8 sm:w-[480px] sm:p-8">
