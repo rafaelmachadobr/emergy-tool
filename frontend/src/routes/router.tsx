@@ -1,6 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import DashboardPage from "../pages/DashboardPage";
 import HomePage from "../pages/HomePage";
+import ImportDataPage from "../pages/ImportDataPage";
 import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { PrivateRoute } from "./private-route";
@@ -24,6 +25,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <DashboardPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/import",
+    element: (
+      <PrivateRoute>
+        <ImportDataPage />
       </PrivateRoute>
     ),
   },
