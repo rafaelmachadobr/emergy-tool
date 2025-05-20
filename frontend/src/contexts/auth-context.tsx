@@ -8,6 +8,7 @@ type AuthContextData = {
   isAuthenticated: boolean;
   signIn: (credentials: SignInProps) => Promise<void>;
   signOut: () => void;
+  isLoading: boolean;
 };
 
 type UserProps = {
@@ -28,6 +29,7 @@ const AuthContext = createContext({} as AuthContextData);
 function AuthProvider({ children }: AuthProviderProps) {
   const [user, setUser] = useState<UserProps | undefined>(undefined);
   const isAuthenticated = !!user;
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const token = Cookies.get("token");
@@ -36,6 +38,8 @@ function AuthProvider({ children }: AuthProviderProps) {
       setUser({ token });
       api.defaults.headers["Authorization"] = `Bearer ${token}`;
     }
+
+    setIsLoading(false);
   }, []);
 
   async function signIn({ username, password }: SignInProps) {
@@ -82,7 +86,9 @@ function AuthProvider({ children }: AuthProviderProps) {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, signIn, signOut }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, signIn, signOut, isLoading }}
+    >
       {children}
     </AuthContext.Provider>
   );

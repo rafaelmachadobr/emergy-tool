@@ -1,17 +1,20 @@
 import { PrivateLayout } from "@/components/layout/private-layout";
 import { useAuth } from "@/hooks/use-auth";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 type PrivateRouteProps = {
   children: JSX.Element;
 };
 
 export function PrivateRoute({ children }: PrivateRouteProps) {
-  const { isAuthenticated } = useAuth();
-  const location = useLocation();
+  const { isAuthenticated, isLoading } = useAuth();
+
+  if (isLoading) {
+    return <div>Carregando...</div>; 
+  }
 
   if (!isAuthenticated) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/login" replace />;
   }
 
   return <PrivateLayout>{children}</PrivateLayout>;
