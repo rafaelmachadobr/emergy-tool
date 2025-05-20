@@ -8,9 +8,9 @@ type PublicOnlyRouteProps = {
 export function PublicOnlyRoute({ children }: PublicOnlyRouteProps) {
   const { isAuthenticated } = useAuth();
 
-  // if (isAuthenticated) {
-  //   return <Navigate to="/dashboard" replace />;
-  // }
+  if (isAuthenticated) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   return children;
 }
