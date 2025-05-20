@@ -6,6 +6,7 @@ import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { PrivateRoute } from "./private-route";
 import { PublicOnlyRoute } from "./public-only-route";
+import CalculatePage from "@/pages/CalculatePage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <ImportDataPage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/calculate",
+    element: (
+      <PrivateRoute>
+        <CalculatePage />
       </PrivateRoute>
     ),
   },
