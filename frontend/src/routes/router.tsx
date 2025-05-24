@@ -1,3 +1,5 @@
+import CalculatePage from "@/pages/CalculatePage";
+import RegisterPage from "@/pages/RegisterPage";
 import { createBrowserRouter } from "react-router-dom";
 import DashboardPage from "../pages/DashboardPage";
 import HomePage from "../pages/HomePage";
@@ -6,7 +8,6 @@ import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { PrivateRoute } from "./private-route";
 import { PublicOnlyRoute } from "./public-only-route";
-import CalculatePage from "@/pages/CalculatePage";
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,14 @@ const router = createBrowserRouter([
     element: (
       <PublicOnlyRoute>
         <LoginPage />
+      </PublicOnlyRoute>
+    ),
+  },
+  {
+    path: "/register",
+    element: (
+      <PublicOnlyRoute>
+        <RegisterPage />
       </PublicOnlyRoute>
     ),
   },

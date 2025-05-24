@@ -1,5 +1,5 @@
 import AuthLayout from "@/components/layout/auth-layout";
-import { UserAuthForm } from "@/components/login/user-auth-form";
+import { RegisterForm } from "@/components/register/register-form";
 import {
   Card,
   CardContent,
@@ -9,22 +9,24 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 
-const LoginPage = () => {
+const RegisterPage = () => {
   return (
     <AuthLayout>
       <Card className="gap-4">
         <CardHeader>
-          <CardTitle className="text-lg tracking-tight">Login</CardTitle>
+          <CardTitle className="text-lg tracking-tight">
+            Criar uma conta
+          </CardTitle>
           <CardDescription>
-            Insira seu usuário e senha abaixo para acessar sua conta
+            Informe seu usuário, e-mail e senha para criar uma conta.
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <UserAuthForm />
+          <RegisterForm />
         </CardContent>
         <CardFooter className="flex flex-col gap-2">
           <p className="text-muted-foreground px-8 text-center text-sm">
-            Ao clicar em entrar, você concorda com nossos{" "}
+            Ao criar uma conta, você concorda com nossos{" "}
             <a
               href="/terms"
               className="hover:text-primary underline underline-offset-4"
@@ -41,12 +43,12 @@ const LoginPage = () => {
             .
           </p>
           <p className="text-center text-sm mt-2">
-            Não tem uma conta?{" "}
+            Já possui uma conta?{" "}
             <a
-              href="/register"
+              href="/login"
               className="hover:text-primary underline underline-offset-4 font-medium"
             >
-              Cadastre-se
+              Entrar
             </a>
           </p>
         </CardFooter>
@@ -55,4 +57,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

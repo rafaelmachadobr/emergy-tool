@@ -48,8 +48,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
 
     setIsLoading(false);
 
-    console.log("isAuthenticated", isAuthenticated);
-
     if (isAuthenticated) {
       navigate("/dashboard");
     }

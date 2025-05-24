@@ -7,6 +7,7 @@ import { toast } from "sonner";
 type AuthContextData = {
   isAuthenticated: boolean;
   signIn: (credentials: SignInProps) => Promise<void>;
+  signUp: (credentials: RegisterProps) => Promise<void>;
   signOut: () => void;
   isLoading: boolean;
 };
@@ -17,6 +18,12 @@ type UserProps = {
 
 type SignInProps = {
   username: string;
+  password: string;
+};
+
+type RegisterProps = {
+  username: string;
+  email: string;
   password: string;
 };
 
@@ -60,16 +67,27 @@ function AuthProvider({ children }: AuthProviderProps) {
     } catch (error) {
       const err = error as AxiosError;
 
-      if (
-        err.response &&
-        err.response.status === 401 &&
-        (err.response.data as { detail?: string })?.detail ===
-          "No active account found with the given credentials"
-      ) {
+      if (err.response && err.response.status === 401) {
         toast.error("Usuário ou senha inválidos.");
       } else {
         toast.error("Erro ao acessar!");
         console.log("Erro ao acessar: ", err);
+      }
+    }
+  }
+
+  async function signUp({ username, email, password }: RegisterProps) {
+    try {
+      await api.post("/users/", { username, email, password });
+      toast.success("Usuário cadastrado com sucesso!");
+    } catch (error) {
+      const err = error as AxiosError;
+
+      if (err.response?.status === 400) {
+        toast.error("Erro ao cadastrar usuário. Verifique os dados.");
+      } else {
+        toast.error("Erro ao cadastrar usuário.");
+        console.log("Erro ao cadastrar usuário: ", err);
       }
     }
   }
@@ -87,7 +105,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, signIn, signOut, isLoading }}
+      value={{ isAuthenticated, signIn, signUp, signOut, isLoading }}
     >
       {children}
     </AuthContext.Provider>
