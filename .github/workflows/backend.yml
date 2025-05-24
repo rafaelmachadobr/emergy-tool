@@ -36,3 +36,28 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_REPOSITORY}}:${{ steps.generate_sha.outputs.sha }}
           docker tag ${{ secrets.DOCKERHUB_REPOSITORY}}:${{ steps.generate_sha.outputs.sha }} ${{ secrets.DOCKERHUB_REPOSITORY}}:latest
           docker push ${{ secrets.DOCKERHUB_REPOSITORY}}:latest
+
+  deploy:
+    name: "Deploy to VM"
+    needs: build-and-push
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull image from docker hub
+        run: sudo docker pull ${{ secrets.DOCKERHUB_REPOSITORY}}:latest
+
+      - name: Remove docker container
+        run: sudo docker rm -f emergy-tool-backend
+
+      - name: Run docker container
+        run: |
+          sudo docker run -d -p 8000:8000 \
+            --restart always \
+            -e DEBUG=${{ secrets.DEBUG }} \
+            -e SECRET_KEY=${{ secrets.SECRET_KEY }} \
+            -e DB_NAME=${{ secrets.DB_NAME }} \
+            -e DB_USER=${{ secrets.DB_USER }} \
+            -e DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
+            -e DB_HOST=${{ secrets.DB_HOST }} \
+            -e DB_PORT=${{ secrets.DB_PORT }} \
+            --name emergy-tool-backend ${{ secrets.DOCKERHUB_REPOSITORY }}:latest
