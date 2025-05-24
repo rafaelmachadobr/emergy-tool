@@ -16,6 +16,7 @@ drf-yasg = "^1.21.10"
 pytest-django = "^4.11.1"
 setuptools = "^80.7.1"
 django-cors-headers = "^4.7.0"
+gunicorn = "^23.0.0"
 
 
 [build-system]

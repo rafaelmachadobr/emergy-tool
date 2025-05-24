@@ -1,14 +1,13 @@
 services:
-  db:
-    image: postgres:16-alpine
-    environment:
-      POSTGRES_USER: emergy-tool
-      POSTGRES_PASSWORD: emergy-tool
-      POSTGRES_DB: emergy_db
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file:
+      - ./src/.env
     ports:
-      - "5432:5432"
+      - "8000:8000"
+    # expose:
+    #   - "8000"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-
-volumes:
-  postgres_data:
+      - ./src:/home/python/app
