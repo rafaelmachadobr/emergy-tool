@@ -23,7 +23,7 @@ jobs:
           echo "sha=${SHA}" >> $GITHUB_OUTPUT
 
       - name: Build docker image
-        run: docker build -t ${{ secrets.DOCKERHUB_REPOSITORY}}:${{ steps.generate_sha.outputs.sha }} -f backend/Dockerfile .
+        run: docker build -t ${{ secrets.DOCKERHUB_REPOSITORY}}:${{ steps.generate_sha.outputs.sha }} -f backend/Dockerfile backend
 
       - name: Log into the container registry
         uses: docker/login-action@v3
