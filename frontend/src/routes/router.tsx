@@ -8,6 +8,7 @@ import LoginPage from "../pages/LoginPage";
 import NotFoundPage from "../pages/NotFoundPage";
 import { PrivateRoute } from "./private-route";
 import { PublicOnlyRoute } from "./public-only-route";
+import HelpPage from "@/pages/HelpPage";
 
 const router = createBrowserRouter([
   {
@@ -51,6 +52,14 @@ const router = createBrowserRouter([
     element: (
       <PrivateRoute>
         <CalculatePage />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/help",
+    element: (
+      <PrivateRoute>
+        <HelpPage />
       </PrivateRoute>
     ),
   },

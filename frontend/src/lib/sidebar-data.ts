@@ -96,8 +96,8 @@ export const sidebarData: SidebarData = {
           ],
         },
         {
-          title: "Central de Ajuda",
-          url: "/help-center",
+          title: "Ajuda & Suporte",
+          url: "/help",
           icon: HelpCircle,
         },
       ],
