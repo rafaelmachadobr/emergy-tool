@@ -7,12 +7,15 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileData } from "@/types/file-data";
 import { FilePlus2 } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { z } from "zod";
 import { FilePreview } from "./components/file-preview";
 import { FileUploadArea } from "./components/file-upload-area";
 import { FormatGuidelinesCard } from "./components/format-guidelines-card";
@@ -44,8 +47,25 @@ const mockPreviousFiles: FileData[] = [
   },
 ];
 
+const importDataSchema = z.object({
+  matrixName: z
+    .string()
+    .min(3, "O nome da matriz deve ter pelo menos 3 caracteres"),
+  files: z
+    .array(
+      z
+        .instanceof(File)
+        .refine(
+          (file) => file.type === "text/csv" || file.name.endsWith(".csv"),
+          { message: "Apenas arquivos CSV são permitidos." }
+        )
+    )
+    .min(1, "Selecione pelo menos um arquivo."),
+});
+
 const ImportDataPage = () => {
   const [files, setFiles] = useState<File[]>([]);
+  const [matrixName, setMatrixName] = useState<string | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -82,7 +102,6 @@ const ImportDataPage = () => {
     const newFiles = Array.from(fileList);
     setFiles(newFiles);
 
-    // Generate preview for the first file if it's a text file
     if (newFiles.length > 0) {
       const file = newFiles[0];
       if (file.type.includes("text") || file.type.includes("csv")) {
@@ -103,23 +122,35 @@ const ImportDataPage = () => {
   };
 
   const handleUpload = () => {
-    if (files.length === 0) {
-      toast.error("Por favor, selecione arquivos para enviar.");
+    const validation = importDataSchema.safeParse({
+      matrixName: matrixName?.trim() || "",
+      files,
+    });
 
+    if (!validation.success) {
+      // Mostra o primeiro erro encontrado
+      toast.error(validation.error.errors[0].message);
       return;
     }
 
     setIsUploading(true);
-    // Simulate an upload process
+    console.log("Upload data:", {
+      projectName: matrixName?.trim(),
+      files: files.map((file) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type,
+      })),
+    });
+
     setTimeout(() => {
       setIsUploading(false);
       toast.success("Arquivos enviados com sucesso.");
 
-      // Reset the form
       setFiles([]);
       setFilePreview(null);
+      setMatrixName(null);
 
-      // Navigate to the calculation page
       navigate("/calculate");
     }, 2000);
   };
@@ -129,6 +160,13 @@ const ImportDataPage = () => {
     newFiles.splice(index, 1);
     setFiles(newFiles);
     if (newFiles.length === 0) setFilePreview(null);
+  };
+
+  const handleCancel = () => {
+    setFiles([]);
+    setFilePreview(null);
+    setMatrixName(null);
+    toast.info("Envio cancelado.");
   };
 
   return (
@@ -152,7 +190,18 @@ const ImportDataPage = () => {
               <CardTitle>Enviar Arquivos</CardTitle>
               <CardDescription>Formatos suportados: CSV.</CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="matrix-name">Nome da Matriz</Label>
+                <Input
+                  id="matrix-name"
+                  type="text"
+                  placeholder="Digite o nome da matriz"
+                  value={matrixName || ""}
+                  onChange={(e) => setMatrixName(e.target.value)}
+                  className="w-full"
+                />
+              </div>
               <FileUploadArea
                 files={files}
                 dragActive={dragActive}
@@ -170,7 +219,11 @@ const ImportDataPage = () => {
               {files.length > 0 && <UploadAlert />}
             </CardContent>
             <CardFooter className="flex justify-between">
-              <Button variant="outline" onClick={() => navigate("/")}>
+              <Button
+                variant="outline"
+                onClick={handleCancel}
+                disabled={files.length === 0 || isUploading}
+              >
                 Cancelar
               </Button>
               <Button
