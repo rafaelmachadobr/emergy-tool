@@ -6,9 +6,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { toast } from "sonner";
-import { z } from "zod";
 import { FilePreview } from "./file-preview";
 import { FileUploadArea } from "./file-upload-area";
 import { FormatGuidelinesCard } from "./format-guidelines-card";
@@ -17,25 +14,11 @@ import { TemplateDownloadCard } from "./template-download-card";
 import { UploadAlert } from "./upload-alert";
 import { UploadControls } from "./upload-controls";
 
-const importDataSchema = z.object({
-  files: z
-    .array(
-      z
-        .instanceof(File)
-        .refine(
-          (file) => file.type === "text/csv" || file.name.endsWith(".csv"),
-          { message: "Apenas arquivos CSV são permitidos." }
-        )
-    )
-    .min(1, "Selecione pelo menos um arquivo."),
-});
-
 export const UploadTabContent = () => {
   const [files, setFiles] = useState<File[]>([]);
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
-  const navigate = useNavigate();
 
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
@@ -87,47 +70,11 @@ export const UploadTabContent = () => {
     }
   };
 
-  const handleUpload = () => {
-    const validation = importDataSchema.safeParse({
-      files,
-    });
-
-    if (!validation.success) {
-      toast.error(validation.error.errors[0].message);
-      return;
-    }
-
-    setIsUploading(true);
-    console.log("Upload data:", {
-      files: files.map((file) => ({
-        name: file.name,
-        size: file.size,
-        type: file.type,
-      })),
-    });
-
-    setTimeout(() => {
-      setIsUploading(false);
-      toast.success("Arquivos enviados com sucesso.");
-
-      setFiles([]);
-      setFilePreview(null);
-
-      navigate("/calculate");
-    }, 2000);
-  };
-
   const removeFile = (index: number) => {
     const newFiles = [...files];
     newFiles.splice(index, 1);
     setFiles(newFiles);
     if (newFiles.length === 0) setFilePreview(null);
-  };
-
-  const handleCancel = () => {
-    setFiles([]);
-    setFilePreview(null);
-    toast.info("Envio cancelado.");
   };
 
   return (
@@ -159,8 +106,9 @@ export const UploadTabContent = () => {
         <UploadControls
           files={files}
           isUploading={isUploading}
-          onCancel={handleCancel}
-          onUpload={handleUpload}
+          setFiles={setFiles}
+          setFilePreview={setFilePreview}
+          setIsUploading={setIsUploading}
         />
       </Card>
 

@@ -29,22 +29,15 @@ export const PreviousUploadsTable: React.FC = () => {
       <TableBody>
         {matrices?.map((matrix) => (
           <TableRow key={matrix.id}>
-            <TableCell className="font-medium">{matrix.name}</TableCell>
+            <TableCell className="font-medium">{matrix.name || ""}</TableCell>
             <TableCell>
-              {matrix.name.substring(matrix.name.indexOf(".") + 1)}
+              {matrix.name?.split(".").pop()?.toUpperCase() || ""}
             </TableCell>
-            <TableCell>{matrix.cells.length}</TableCell>
+            <TableCell>{matrix.cells?.length || 0}</TableCell>
             <TableCell>
-              {new Date(matrix.uploaded_at)
-                .toLocaleString("pt-BR", {
-                  day: "2-digit",
-                  month: "2-digit",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                  second: "2-digit",
-                })
-                .replace(", ", " ")}
+              {matrix.uploaded_at
+                ? new Date(matrix.uploaded_at).toLocaleString("pt-BR")
+                : ""}
             </TableCell>
             <TableCell className="text-right">
               <Button
