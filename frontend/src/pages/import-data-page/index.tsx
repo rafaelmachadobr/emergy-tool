@@ -1,51 +1,10 @@
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { FileData } from "@/types/file-data";
-import { FilePlus2 } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { z } from "zod";
-import { FilePreview } from "./components/file-preview";
-import { FileUploadArea } from "./components/file-upload-area";
-import { FormatGuidelinesCard } from "./components/format-guidelines-card";
-import { PreviousUploadsTable } from "./components/previous-uploads-table";
-import { SelectedFilesList } from "./components/selected-files-list";
-import { UploadAlert } from "./components/upload-alert";
-
-const mockPreviousFiles: FileData[] = [
-  {
-    id: 1,
-    name: "energy_flows_2023.csv",
-    type: "csv",
-    size: 1240000,
-    uploadedAt: new Date("2023-12-10"),
-  },
-  {
-    id: 2,
-    name: "resource_data.csv",
-    type: "csv",
-    size: 823000,
-    uploadedAt: new Date("2023-12-15"),
-  },
-  {
-    id: 3,
-    name: "emissions_data.csv",
-    type: "csv",
-    size: 652000,
-    uploadedAt: new Date("2024-01-05"),
-  },
-];
+import { PreviousUploadsTabContent } from "./components/previous-uploads-tab-content";
+import { UploadTabContent } from "./components/upload-tab-content";
 
 const importDataSchema = z.object({
   matrixName: z
@@ -128,7 +87,6 @@ const ImportDataPage = () => {
     });
 
     if (!validation.success) {
-      // Mostra o primeiro erro encontrado
       toast.error(validation.error.errors[0].message);
       return;
     }
@@ -185,82 +143,24 @@ const ImportDataPage = () => {
         </TabsList>
 
         <TabsContent value="upload" className="space-y-6">
-          <Card>
-            <CardHeader>
-              <CardTitle>Enviar Arquivos</CardTitle>
-              <CardDescription>Formatos suportados: CSV.</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="matrix-name">Nome da Matriz</Label>
-                <Input
-                  id="matrix-name"
-                  type="text"
-                  placeholder="Digite o nome da matriz"
-                  value={matrixName || ""}
-                  onChange={(e) => setMatrixName(e.target.value)}
-                  className="w-full"
-                />
-              </div>
-              <FileUploadArea
-                files={files}
-                dragActive={dragActive}
-                handleDrag={handleDrag}
-                handleDrop={handleDrop}
-                handleChange={handleChange}
-              />
-
-              {files.length > 0 && (
-                <SelectedFilesList files={files} removeFile={removeFile} />
-              )}
-
-              {filePreview && <FilePreview filePreview={filePreview} />}
-
-              {files.length > 0 && <UploadAlert />}
-            </CardContent>
-            <CardFooter className="flex justify-between">
-              <Button
-                variant="outline"
-                onClick={handleCancel}
-                disabled={files.length === 0 || isUploading}
-              >
-                Cancelar
-              </Button>
-              <Button
-                onClick={handleUpload}
-                disabled={files.length === 0 || isUploading}
-                className="bg-primary hover:bg-primary/90"
-              >
-                {isUploading ? (
-                  <>
-                    <span className="mr-2 animate-spin">⟳</span>
-                    Enviando...
-                  </>
-                ) : (
-                  <>
-                    <FilePlus2 className="mr-2 h-4 w-4" />
-                    Enviar e Processar
-                  </>
-                )}
-              </Button>
-            </CardFooter>
-          </Card>
-
-          <FormatGuidelinesCard />
+          <UploadTabContent
+            matrixName={matrixName}
+            setMatrixName={setMatrixName}
+            files={files}
+            filePreview={filePreview}
+            dragActive={dragActive}
+            handleDrag={handleDrag}
+            handleDrop={handleDrop}
+            handleChange={handleChange}
+            removeFile={removeFile}
+            handleCancel={handleCancel}
+            handleUpload={handleUpload}
+            isUploading={isUploading}
+          />
         </TabsContent>
 
         <TabsContent value="previous">
-          <Card>
-            <CardHeader>
-              <CardTitle>Uploads Anteriores</CardTitle>
-              <CardDescription>
-                Arquivos que você enviou anteriormente para o cálculo de emergia
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <PreviousUploadsTable files={mockPreviousFiles} />
-            </CardContent>
-          </Card>
+          <PreviousUploadsTabContent />
         </TabsContent>
       </Tabs>
     </div>
