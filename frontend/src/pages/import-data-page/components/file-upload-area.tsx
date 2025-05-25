@@ -47,6 +47,7 @@ export const FileUploadArea: React.FC<FileUploadAreaProps> = ({
         id="file-upload"
         type="file"
         multiple
+        accept=".csv"
         className="hidden"
         onChange={handleChange}
       />
