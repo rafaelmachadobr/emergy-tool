@@ -27,5 +27,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),  
     path('api/lci/', include('lci.urls')),
     path('api/', include('accounts.urls')),
+    path('api/scale/', include('scale_config.urls')),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='swagger'),
 ]
