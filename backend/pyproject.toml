@@ -17,6 +17,7 @@ pytest-django = "^4.11.1"
 setuptools = "^80.7.1"
 django-cors-headers = "^4.7.0"
 gunicorn = "^23.0.0"
+pandas = "^2.2.3"
 
 
 [build-system]
