@@ -29,6 +29,7 @@ import {
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { FilePreview } from "./components/file-preview";
 
 const mockPreviousFiles: FileData[] = [
   {
@@ -246,18 +247,7 @@ const ImportDataPage = () => {
                 </div>
               )}
 
-              {filePreview && (
-                <div className="mt-6 space-y-2">
-                  <h3 className="text-lg font-medium">
-                    Pré-visualização do Arquivo
-                  </h3>
-                  <div className="p-4 bg-muted rounded-md">
-                    <pre className="text-xs overflow-auto max-h-40 text-left whitespace-pre-wrap">
-                      {filePreview}
-                    </pre>
-                  </div>
-                </div>
-              )}
+              {filePreview && <FilePreview filePreview={filePreview} />}
 
               {files.length > 0 && (
                 <Alert className="mt-6">
