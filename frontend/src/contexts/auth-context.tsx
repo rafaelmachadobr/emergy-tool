@@ -13,7 +13,8 @@ type AuthContextData = {
 };
 
 type UserProps = {
-  token: string;
+  access: string;
+  refresh: string;
 };
 
 type SignInProps = {
@@ -39,30 +40,61 @@ function AuthProvider({ children }: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const token = Cookies.get("token");
+    const access = Cookies.get("access");
+    const refresh = Cookies.get("refresh");
 
-    if (token) {
-      setUser({ token });
-      api.defaults.headers["Authorization"] = `Bearer ${token}`;
+    async function refreshAccessToken(refreshToken: string) {
+      try {
+        const response = await api.post("/token/refresh/", {
+          refresh: refreshToken,
+        });
+        const newAccess = response.data.access;
+
+        Cookies.set("access", newAccess, {
+          expires: 30,
+          path: "/",
+          secure: true,
+          sameSite: "strict",
+        });
+
+        setUser({ access: newAccess, refresh: refreshToken });
+        api.defaults.headers["Authorization"] = `Bearer ${newAccess}`;
+      } catch (error) {
+        console.log("Refresh token inválido ou expirado, removendo...");
+        signOut(false); // avoid double toast
+      } finally {
+        setIsLoading(false);
+      }
     }
 
-    setIsLoading(false);
+    if (access && refresh) {
+      refreshAccessToken(refresh);
+    } else {
+      setIsLoading(false);
+    }
   }, []);
 
   async function signIn({ username, password }: SignInProps) {
     try {
       const response = await api.post("/token/", { username, password });
-      const token = response.data.access;
+      const { access, refresh } = response.data;
 
-      Cookies.set("token", token, {
+      Cookies.set("access", access, {
         expires: 30,
         path: "/",
         secure: true,
         sameSite: "strict",
       });
 
-      setUser({ token });
-      api.defaults.headers["Authorization"] = `Bearer ${token}`;
+      Cookies.set("refresh", refresh, {
+        expires: 30,
+        path: "/",
+        secure: true,
+        sameSite: "strict",
+      });
+
+      setUser({ access, refresh });
+      api.defaults.headers["Authorization"] = `Bearer ${access}`;
       toast.success("Logado com sucesso!");
     } catch (error) {
       const err = error as AxiosError;
@@ -92,12 +124,13 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  function signOut() {
+  function signOut(showToast = true) {
     try {
-      Cookies.remove("token");
+      Cookies.remove("access");
+      Cookies.remove("refresh");
       setUser(undefined);
       delete api.defaults.headers["Authorization"];
-      toast.success("Deslogado com sucesso!");
+      if (showToast) toast.success("Deslogado com sucesso!");
     } catch {
       console.log("Erro ao sair");
     }
