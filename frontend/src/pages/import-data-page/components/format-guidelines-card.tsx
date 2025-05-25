@@ -20,8 +20,8 @@ export const FormatGuidelinesCard = () => (
         <div>
           <h4 className="font-medium">Formato CSV</h4>
           <p className="text-sm text-muted-foreground mt-1">
-            Os cabeçalhos devem incluir: 'resource_name', 'quantity', 'unit',
-            'transformity', 'type'
+            Os cabeçalhos devem incluir: 'Processo', 'Fertilizante (kg)', 'Água
+            (L)', 'Combustível (L)', 'Emissões N2O (kg)'
           </p>
         </div>
       </div>
