@@ -1,4 +1,4 @@
-import CalculatePage from "@/pages/CalculatePage";
+import CalculatePage from "@/pages/calculate-page";
 import DashboardPage from "@/pages/DashboardPage";
 import HelpPage from "@/pages/HelpPage";
 import ImportDataPage from "@/pages/import-data-page";
