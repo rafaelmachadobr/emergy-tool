@@ -1,4 +1,3 @@
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -8,23 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileData } from "@/types/file-data";
-import { AlertCircle, FilePlus2 } from "lucide-react";
+import { FilePlus2 } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FilePreview } from "./components/file-preview";
 import { FileUploadArea } from "./components/file-upload-area";
+import { PreviousUploadsTable } from "./components/previous-uploads-table";
 import { SelectedFilesList } from "./components/selected-files-list";
+import { UploadAlert } from "./components/upload-alert";
 
 const mockPreviousFiles: FileData[] = [
   {
@@ -183,16 +176,7 @@ const ImportDataPage = () => {
 
               {filePreview && <FilePreview filePreview={filePreview} />}
 
-              {files.length > 0 && (
-                <Alert className="mt-6">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    Os arquivos serão processados de acordo com a metodologia de
-                    cálculo de emergia SCALE. Certifique-se de que seus dados
-                    estejam formatados corretamente.
-                  </AlertDescription>
-                </Alert>
-              )}
+              {files.length > 0 && <UploadAlert />}
             </CardContent>
             <CardFooter className="flex justify-between">
               <Button variant="outline" onClick={() => navigate("/")}>
@@ -249,38 +233,10 @@ const ImportDataPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Table>
-                <TableHeader>
-                  <TableRow>
-                    <TableHead>Nome do Arquivo</TableHead>
-                    <TableHead>Tipo</TableHead>
-                    <TableHead>Tamanho</TableHead>
-                    <TableHead>Data de Upload</TableHead>
-                    <TableHead className="text-right">Ações</TableHead>
-                  </TableRow>
-                </TableHeader>
-                <TableBody>
-                  {mockPreviousFiles.map((file) => (
-                    <TableRow key={file.id}>
-                      <TableCell className="font-medium">{file.name}</TableCell>
-                      <TableCell>{file.type.toUpperCase()}</TableCell>
-                      <TableCell>{formatFileSize(file.size)}</TableCell>
-                      <TableCell>
-                        {file.uploadedAt.toLocaleDateString()}
-                      </TableCell>
-                      <TableCell className="text-right">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => navigate("/calculate")}
-                        >
-                          Usar Este Arquivo
-                        </Button>
-                      </TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
+              <PreviousUploadsTable
+                files={mockPreviousFiles}
+                formatFileSize={formatFileSize}
+              />
             </CardContent>
           </Card>
         </TabsContent>
