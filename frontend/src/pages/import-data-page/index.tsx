@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Label } from "@/components/ui/label";
 import {
   Table,
   TableBody,
@@ -19,17 +18,12 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileData } from "@/types/file-data";
-import {
-  AlertCircle,
-  FilePlus2,
-  FileType2,
-  FileUp,
-  Upload,
-} from "lucide-react";
+import { AlertCircle, FilePlus2, FileType2 } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FilePreview } from "./components/file-preview";
+import { FileUploadArea } from "./components/file-upload-area";
 
 const mockPreviousFiles: FileData[] = [
   {
@@ -162,50 +156,13 @@ const ImportDataPage = () => {
               <CardDescription>Formatos suportados: CSV.</CardDescription>
             </CardHeader>
             <CardContent>
-              <div
-                className={`border-2 border-dashed rounded-lg p-10 text-center ${
-                  dragActive
-                    ? "border-scale-primary bg-scale-highlight/20"
-                    : "border-border"
-                }`}
-                onDragEnter={handleDrag}
-                onDragLeave={handleDrag}
-                onDragOver={handleDrag}
-                onDrop={handleDrop}
-              >
-                <div className="flex flex-col items-center justify-center gap-4">
-                  <Upload className="h-10 w-10 text-muted-foreground" />
-                  <div>
-                    <p className="text-lg font-medium">
-                      {files.length > 0
-                        ? `${files.length} arquivo(s) selecionado(s)`
-                        : "Arraste e solte arquivos aqui"}
-                    </p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      ou clique para buscar
-                    </p>
-                  </div>
-                  <Label htmlFor="file-upload" className="sr-only">
-                    Escolher arquivos
-                  </Label>
-                  <input
-                    id="file-upload"
-                    type="file"
-                    multiple
-                    className="hidden"
-                    onChange={handleChange}
-                  />
-                  <Button
-                    variant="outline"
-                    onClick={() =>
-                      document.getElementById("file-upload")?.click()
-                    }
-                  >
-                    <FileUp className="mr-2 h-4 w-4" />
-                    Buscar Arquivos
-                  </Button>
-                </div>
-              </div>
+              <FileUploadArea
+                files={files}
+                dragActive={dragActive}
+                handleDrag={handleDrag}
+                handleDrop={handleDrop}
+                handleChange={handleChange}
+              />
 
               {files.length > 0 && (
                 <div className="mt-6 space-y-4">
