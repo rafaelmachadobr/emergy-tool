@@ -18,12 +18,13 @@ import {
 } from "@/components/ui/table";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FileData } from "@/types/file-data";
-import { AlertCircle, FilePlus2, FileType2 } from "lucide-react";
+import { AlertCircle, FilePlus2 } from "lucide-react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FilePreview } from "./components/file-preview";
 import { FileUploadArea } from "./components/file-upload-area";
+import { SelectedFilesList } from "./components/selected-files-list";
 
 const mockPreviousFiles: FileData[] = [
   {
@@ -134,6 +135,14 @@ const ImportDataPage = () => {
     else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
     else return (bytes / 1048576).toFixed(1) + " MB";
   };
+
+  const removeFile = (index: number) => {
+    const newFiles = [...files];
+    newFiles.splice(index, 1);
+    setFiles(newFiles);
+    if (newFiles.length === 0) setFilePreview(null);
+  };
+
   return (
     <div className="space-y-6">
       <div>
@@ -165,43 +174,11 @@ const ImportDataPage = () => {
               />
 
               {files.length > 0 && (
-                <div className="mt-6 space-y-4">
-                  <h3 className="text-lg font-medium">Arquivos Selecionados</h3>
-                  <div className="space-y-2">
-                    {files.map((file, index) => (
-                      <div
-                        key={index}
-                        className="flex items-center justify-between p-3 border rounded-md"
-                      >
-                        <div className="flex items-center">
-                          <div className="p-2 rounded-full bg-muted mr-3">
-                            <FileType2 className="h-4 w-4" />
-                          </div>
-                          <div>
-                            <p className="font-medium">{file.name}</p>
-                            <p className="text-xs text-muted-foreground">
-                              {formatFileSize(file.size)}
-                            </p>
-                          </div>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          onClick={() => {
-                            const newFiles = [...files];
-                            newFiles.splice(index, 1);
-                            setFiles(newFiles);
-                            if (newFiles.length === 0) {
-                              setFilePreview(null);
-                            }
-                          }}
-                        >
-                          Remover
-                        </Button>
-                      </div>
-                    ))}
-                  </div>
-                </div>
+                <SelectedFilesList
+                  files={files}
+                  formatFileSize={formatFileSize}
+                  removeFile={removeFile}
+                />
               )}
 
               {filePreview && <FilePreview filePreview={filePreview} />}
