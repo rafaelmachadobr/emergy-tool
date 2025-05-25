@@ -1,19 +1,19 @@
 import CalculatePage from "@/pages/CalculatePage";
+import DashboardPage from "@/pages/DashboardPage";
+import HelpPage from "@/pages/HelpPage";
+import ImportDataPage from "@/pages/ImportDataPage";
+import LandingPage from "@/pages/LandingPage";
+import LoginPage from "@/pages/LoginPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 import RegisterPage from "@/pages/RegisterPage";
 import { createBrowserRouter } from "react-router-dom";
-import DashboardPage from "../pages/DashboardPage";
-import HomePage from "../pages/HomePage";
-import ImportDataPage from "../pages/ImportDataPage";
-import LoginPage from "../pages/LoginPage";
-import NotFoundPage from "../pages/NotFoundPage";
 import { PrivateRoute } from "./private-route";
 import { PublicOnlyRoute } from "./public-only-route";
-import HelpPage from "@/pages/HelpPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <HomePage />,
+    element: <LandingPage />,
   },
   {
     path: "/login",
