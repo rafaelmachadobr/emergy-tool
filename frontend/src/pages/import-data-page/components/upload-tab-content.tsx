@@ -13,6 +13,7 @@ import { FilePreview } from "./file-preview";
 import { FileUploadArea } from "./file-upload-area";
 import { FormatGuidelinesCard } from "./format-guidelines-card";
 import { SelectedFilesList } from "./selected-files-list";
+import { TemplateDownloadCard } from "./template-download-card";
 import { UploadAlert } from "./upload-alert";
 import { UploadControls } from "./upload-controls";
 
@@ -131,6 +132,8 @@ export const UploadTabContent = () => {
 
   return (
     <>
+      <TemplateDownloadCard />
+
       <Card>
         <CardHeader>
           <CardTitle>Enviar Arquivos</CardTitle>
