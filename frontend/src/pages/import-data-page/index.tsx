@@ -104,7 +104,7 @@ const ImportDataPage = () => {
 
   const handleUpload = () => {
     if (files.length === 0) {
-      toast.error("Please select files to upload.");
+      toast.error("Por favor, selecione arquivos para enviar.");
 
       return;
     }
@@ -113,7 +113,7 @@ const ImportDataPage = () => {
     // Simulate an upload process
     setTimeout(() => {
       setIsUploading(false);
-      toast.success("Files uploaded successfully.");
+      toast.success("Arquivos enviados com sucesso.");
 
       // Reset the form
       setFiles([]);
@@ -186,7 +186,7 @@ const ImportDataPage = () => {
               <Button
                 onClick={handleUpload}
                 disabled={files.length === 0 || isUploading}
-                className="bg-scale-primary hover:bg-scale-primary/90"
+                className="bg-primary hover:bg-primary/90"
               >
                 {isUploading ? (
                   <>

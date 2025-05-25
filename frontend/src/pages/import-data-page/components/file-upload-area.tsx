@@ -20,7 +20,7 @@ export const FileUploadArea: React.FC<FileUploadAreaProps> = ({
   <div
     className={`border-2 border-dashed rounded-lg p-10 text-center ${
       dragActive
-        ? "border-scale-primary bg-scale-highlight/20"
+        ? "border-primary bg-highlight/20"
         : "border-border"
     }`}
     onDragEnter={handleDrag}
