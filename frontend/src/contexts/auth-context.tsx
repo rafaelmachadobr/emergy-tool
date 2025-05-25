@@ -61,7 +61,7 @@ function AuthProvider({ children }: AuthProviderProps) {
         api.defaults.headers["Authorization"] = `Bearer ${newAccess}`;
       } catch (error) {
         console.log("Refresh token inválido ou expirado, removendo...");
-        signOut(false); // avoid double toast
+        signOut(false);
       } finally {
         setIsLoading(false);
       }
@@ -126,11 +126,13 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   function signOut(showToast = true) {
     try {
-      Cookies.remove("access");
-      Cookies.remove("refresh");
-      setUser(undefined);
-      delete api.defaults.headers["Authorization"];
-      if (showToast) toast.success("Deslogado com sucesso!");
+      if (window.confirm("Tem certeza que quer sair?")) {
+        Cookies.remove("access");
+        Cookies.remove("refresh");
+        setUser(undefined);
+        delete api.defaults.headers["Authorization"];
+        if (showToast) toast.success("Deslogado com sucesso!");
+      }
     } catch {
       console.log("Erro ao sair");
     }

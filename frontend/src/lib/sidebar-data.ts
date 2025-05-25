@@ -1,40 +1,19 @@
 import { type SidebarData } from "@/types/sidebar";
 import {
-  Bell,
+  Calculator,
   Eye,
-  Grid,
+  FileInput,
   HelpCircle,
   LayoutDashboard,
-  List,
-  MessageSquare,
   Settings,
   User,
-  Users,
 } from "lucide-react";
 
 export const sidebarData: SidebarData = {
   user: {
-    name: "satnaing",
-    email: "satnaingdev@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "unip",
+    email: "ti@aluno.unip.br",
   },
-  teams: [
-    {
-      name: "Administração Shadcn",
-      logo: Grid,
-      plan: "Vite + ShadcnUI",
-    },
-    {
-      name: "Acme Inc",
-      logo: Grid,
-      plan: "Enterprise",
-    },
-    {
-      name: "Acme Corp.",
-      logo: Grid,
-      plan: "Startup",
-    },
-  ],
   navGroups: [
     {
       title: "Geral",
@@ -47,17 +26,12 @@ export const sidebarData: SidebarData = {
         {
           title: "Importar Dados",
           url: "/import",
-          icon: List,
+          icon: FileInput,
         },
         {
           title: "Calcular",
           url: "/calculate",
-          icon: MessageSquare,
-        },
-        {
-          title: "Relatórios",
-          url: "/reports",
-          icon: Users,
+          icon: Calculator,
         },
       ],
     },
@@ -76,21 +50,11 @@ export const sidebarData: SidebarData = {
             {
               title: "Conta",
               url: "/settings/account",
-              icon: User,
+              icon: Settings,
             },
             {
               title: "Aparência",
               url: "/settings/appearance",
-              icon: Eye,
-            },
-            {
-              title: "Notificações",
-              url: "/settings/notifications",
-              icon: Bell,
-            },
-            {
-              title: "Exibição",
-              url: "/settings/display",
               icon: Eye,
             },
           ],
