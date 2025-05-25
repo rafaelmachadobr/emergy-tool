@@ -33,8 +33,6 @@ export function ProfileDropdown() {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-
-        <DropdownMenuSeparator />
         <DropdownMenuItem onClick={signOut}>
           Sair
           <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
