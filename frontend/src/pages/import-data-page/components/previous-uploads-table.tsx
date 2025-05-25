@@ -13,8 +13,6 @@ import { useNavigate } from "react-router-dom";
 export const PreviousUploadsTable: React.FC = () => {
   const { data: matrices } = useGetMatrices();
 
-  console.log("Matrices", matrices);
-
   const navigate = useNavigate();
 
   return (
@@ -23,7 +21,7 @@ export const PreviousUploadsTable: React.FC = () => {
         <TableRow>
           <TableHead>Nome do Arquivo</TableHead>
           <TableHead>Tipo</TableHead>
-          <TableHead>Quantidade de Linhas</TableHead>
+          <TableHead>Quantidade de Células</TableHead>
           <TableHead>Data de Upload</TableHead>
           <TableHead className="text-right">Ações</TableHead>
         </TableRow>
@@ -35,7 +33,7 @@ export const PreviousUploadsTable: React.FC = () => {
             <TableCell>
               {matrix.name.substring(matrix.name.indexOf(".") + 1)}
             </TableCell>
-            <TableCell>{matrix.cells.length} linhas</TableCell>
+            <TableCell>{matrix.cells.length}</TableCell>
             <TableCell>
               {new Date(matrix.uploaded_at)
                 .toLocaleString("pt-BR", {
