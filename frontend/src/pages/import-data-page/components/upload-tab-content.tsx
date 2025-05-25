@@ -12,15 +12,11 @@ import { z } from "zod";
 import { FilePreview } from "./file-preview";
 import { FileUploadArea } from "./file-upload-area";
 import { FormatGuidelinesCard } from "./format-guidelines-card";
-import { MatrixNameInput } from "./matrix-name-input";
 import { SelectedFilesList } from "./selected-files-list";
 import { UploadAlert } from "./upload-alert";
 import { UploadControls } from "./upload-controls";
 
 const importDataSchema = z.object({
-  matrixName: z
-    .string()
-    .min(3, "O nome da matriz deve ter pelo menos 3 caracteres"),
   files: z
     .array(
       z
@@ -35,7 +31,6 @@ const importDataSchema = z.object({
 
 export const UploadTabContent = () => {
   const [files, setFiles] = useState<File[]>([]);
-  const [matrixName, setMatrixName] = useState<string | null>(null);
   const [filePreview, setFilePreview] = useState<string | null>(null);
   const [dragActive, setDragActive] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
@@ -93,7 +88,6 @@ export const UploadTabContent = () => {
 
   const handleUpload = () => {
     const validation = importDataSchema.safeParse({
-      matrixName: matrixName?.trim() || "",
       files,
     });
 
@@ -104,7 +98,6 @@ export const UploadTabContent = () => {
 
     setIsUploading(true);
     console.log("Upload data:", {
-      projectName: matrixName?.trim(),
       files: files.map((file) => ({
         name: file.name,
         size: file.size,
@@ -118,7 +111,6 @@ export const UploadTabContent = () => {
 
       setFiles([]);
       setFilePreview(null);
-      setMatrixName(null);
 
       navigate("/calculate");
     }, 2000);
@@ -134,7 +126,6 @@ export const UploadTabContent = () => {
   const handleCancel = () => {
     setFiles([]);
     setFilePreview(null);
-    setMatrixName(null);
     toast.info("Envio cancelado.");
   };
 
@@ -146,10 +137,6 @@ export const UploadTabContent = () => {
           <CardDescription>Formatos suportados: CSV.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-6">
-          <MatrixNameInput
-            matrixName={matrixName}
-            setMatrixName={setMatrixName}
-          />
           <FileUploadArea
             files={files}
             dragActive={dragActive}
