@@ -1,15 +1,14 @@
 import { Button } from "@/components/ui/button";
+import { formatFileSize } from "@/utils/format-file-size";
 import { FileType2 } from "lucide-react";
 
 interface SelectedFilesListProps {
   files: File[];
-  formatFileSize: (bytes: number) => string;
   removeFile: (index: number) => void;
 }
 
 export const SelectedFilesList: React.FC<SelectedFilesListProps> = ({
   files,
-  formatFileSize,
   removeFile,
 }) => (
   <div className="mt-6 space-y-4">

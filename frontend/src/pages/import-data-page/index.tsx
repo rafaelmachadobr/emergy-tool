@@ -15,10 +15,10 @@ import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { FilePreview } from "./components/file-preview";
 import { FileUploadArea } from "./components/file-upload-area";
+import { FormatGuidelinesCard } from "./components/format-guidelines-card";
 import { PreviousUploadsTable } from "./components/previous-uploads-table";
 import { SelectedFilesList } from "./components/selected-files-list";
 import { UploadAlert } from "./components/upload-alert";
-import { FormatGuidelinesCard } from "./components/format-guidelines-card";
 
 const mockPreviousFiles: FileData[] = [
   {
@@ -124,12 +124,6 @@ const ImportDataPage = () => {
     }, 2000);
   };
 
-  const formatFileSize = (bytes: number): string => {
-    if (bytes < 1024) return bytes + " B";
-    else if (bytes < 1048576) return (bytes / 1024).toFixed(1) + " KB";
-    else return (bytes / 1048576).toFixed(1) + " MB";
-  };
-
   const removeFile = (index: number) => {
     const newFiles = [...files];
     newFiles.splice(index, 1);
@@ -168,11 +162,7 @@ const ImportDataPage = () => {
               />
 
               {files.length > 0 && (
-                <SelectedFilesList
-                  files={files}
-                  formatFileSize={formatFileSize}
-                  removeFile={removeFile}
-                />
+                <SelectedFilesList files={files} removeFile={removeFile} />
               )}
 
               {filePreview && <FilePreview filePreview={filePreview} />}
@@ -215,10 +205,7 @@ const ImportDataPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <PreviousUploadsTable
-                files={mockPreviousFiles}
-                formatFileSize={formatFileSize}
-              />
+              <PreviousUploadsTable files={mockPreviousFiles} />
             </CardContent>
           </Card>
         </TabsContent>

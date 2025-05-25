@@ -8,16 +8,15 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { FileData } from "@/types/file-data";
+import { formatFileSize } from "@/utils/format-file-size";
 import { useNavigate } from "react-router-dom";
 
 interface PreviousUploadsTableProps {
   files: FileData[];
-  formatFileSize: (bytes: number) => string;
 }
 
 export const PreviousUploadsTable: React.FC<PreviousUploadsTableProps> = ({
   files,
-  formatFileSize,
 }) => {
   const navigate = useNavigate();
   return (
