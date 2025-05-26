@@ -76,8 +76,7 @@ export const CalculationsTabContent: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6 mt-6">
-      {/* Header com estatísticas */}
+    <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <Card>
           <CardContent className="p-4">

@@ -7,3 +7,8 @@ export const emergyCalculationQueryKeys = {
   getAll: () => ["emergy-calculations"],
   getOne: (id: number) => ["emergy-calculation", id],
 };
+
+export const configQueryKeys = {
+  getAll: () => ["configs"],
+  getOne: (id: number) => ["config", id],
+};

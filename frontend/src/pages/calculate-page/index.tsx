@@ -16,7 +16,7 @@ const CalculatePage: React.FC = () => {
       </div>
 
       <Tabs defaultValue="calculations" className="w-full">
-        <TabsList className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2 mb-6">
           <TabsTrigger value="calculations">Cálculos</TabsTrigger>
           <TabsTrigger value="newCalculation">Novo Cálculo</TabsTrigger>
         </TabsList>
