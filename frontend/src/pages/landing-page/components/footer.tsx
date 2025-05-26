@@ -8,8 +8,8 @@ export const Footer = () => {
           <div className="col-span-1 md:col-span-1">
             <h3 className="text-lg font-semibold mb-4">Emergy Tool</h3>
             <p className="text-muted-foreground mb-4">
-              Transformando dados em insights acionáveis para empresas de todos
-              os tamanhos.
+              Plataforma de análise de dados para empresas que buscam
+              eficiência, inovação e crescimento sustentável.
             </p>
           </div>
 
@@ -21,7 +21,7 @@ export const Footer = () => {
                   to="/features"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Funcionalidades
+                  Soluções
                 </Link>
               </li>
               <li>
@@ -29,7 +29,7 @@ export const Footer = () => {
                   to="/pricing"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Preços
+                  Planos e Preços
                 </Link>
               </li>
               <li>
@@ -45,7 +45,7 @@ export const Footer = () => {
                   to="/case-studies"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Estudos de Caso
+                  Casos de Sucesso
                 </Link>
               </li>
             </ul>
@@ -59,7 +59,7 @@ export const Footer = () => {
                   to="/help"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Central de Ajuda
+                  Suporte
                 </Link>
               </li>
               <li>
@@ -89,7 +89,7 @@ export const Footer = () => {
                   to="/about"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Sobre Nós
+                  Sobre a Emergy
                 </Link>
               </li>
               <li>
@@ -97,7 +97,7 @@ export const Footer = () => {
                   to="/contact"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Contato
+                  Fale Conosco
                 </Link>
               </li>
               <li>
@@ -105,7 +105,7 @@ export const Footer = () => {
                   to="/legal"
                   className="text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Legal
+                  Legalidade
                 </Link>
               </li>
             </ul>
@@ -119,13 +119,13 @@ export const Footer = () => {
           </p>
           <div className="flex space-x-4 mt-4 md:mt-0">
             <a href="#" className="text-muted-foreground hover:text-foreground">
-              Termos
+              Termos de Uso
             </a>
             <a href="#" className="text-muted-foreground hover:text-foreground">
-              Privacidade
+              Política de Privacidade
             </a>
             <a href="#" className="text-muted-foreground hover:text-foreground">
-              Cookies
+              Política de Cookies
             </a>
           </div>
         </div>

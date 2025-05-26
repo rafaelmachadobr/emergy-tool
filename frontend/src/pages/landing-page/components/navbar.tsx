@@ -34,7 +34,7 @@ interface FeatureProps {
 const routeList: RouteProps[] = [
   {
     href: "#testimonials",
-    label: "Depoimentos",
+    label: "Clientes",
   },
   {
     href: "#team",
@@ -46,24 +46,24 @@ const routeList: RouteProps[] = [
   },
   {
     href: "#faq",
-    label: "Perguntas frequentes",
+    label: "FAQ",
   },
 ];
 
 const featureList: FeatureProps[] = [
   {
-    title: "Mostre seu valor",
-    description: "Destaque como seu produto resolve problemas dos usuários.",
+    title: "Análise Inteligente",
+    description:
+      "Transforme grandes volumes de dados em decisões estratégicas.",
   },
   {
-    title: "Construa confiança",
-    description:
-      "Use elementos de prova social para estabelecer confiança e credibilidade.",
+    title: "Segurança e Confiabilidade",
+    description: "Seus dados protegidos com as melhores práticas do mercado.",
   },
   {
-    title: "Capture leads",
+    title: "Integração Simplificada",
     description:
-      "Deixe seu formulário de captação de leads visualmente atraente e estratégico.",
+      "Conecte facilmente suas fontes de dados e acelere resultados.",
   },
 ];
 
@@ -73,7 +73,7 @@ export const Navbar = () => {
     <header className="flex items-center justify-between w-full bg-card border-b border-b-secondary px-12 py-4">
       <Link to="/" className="font-bold text-lg flex items-center">
         <ChevronsDown className="bg-gradient-to-tr border-secondary from-primary via-primary/70 to-primary rounded-lg w-9 h-9 mr-2 border text-white" />
-        Shadcn
+        Emergy Tool
       </Link>
       {/* <!-- Mobile --> */}
       <div className="flex items-center lg:hidden">

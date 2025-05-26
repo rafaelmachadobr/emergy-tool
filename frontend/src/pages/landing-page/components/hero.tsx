@@ -12,25 +12,25 @@ export const HeroSection = () => {
             Emergy Tool
           </Badge>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white drop-shadow-md">
-            Transforme seus dados em <br className="hidden md:block" />
+            Dados que impulsionam <br className="hidden md:block" />
             <span className="text-[#E5F9E0] font-extrabold">
-              Insights acionáveis
+              decisões inteligentes
             </span>
           </h1>
           <p className="text-white/90 text-lg md:text-xl max-w-3xl mt-6 leading-relaxed">
-            Uma plataforma de análise poderosa projetada para ajudar empresas a
-            tomar decisões baseadas em dados, com visualização intuitiva e
-            análises avançadas.
+            Solução completa para análise, visualização e gestão de dados
+            corporativos. Otimize processos, reduza custos e aumente a
+            eficiência com insights em tempo real.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-8">
             <Button asChild size="lg">
               <Link to="/register">
-                Comece grátis
+                Teste gratuitamente
                 <ArrowRight className="ml-2 h-5 w-5" />
               </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link to="/login">Entrar</Link>
+              <Link to="/login">Acessar conta</Link>
             </Button>
           </div>
         </div>
