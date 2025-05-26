@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     "drf_yasg",
     "corsheaders",
     "scale_config",
+    "dashboard",
 ]
 
 MIDDLEWARE = [
