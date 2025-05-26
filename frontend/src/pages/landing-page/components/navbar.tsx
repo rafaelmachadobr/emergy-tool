@@ -65,6 +65,21 @@ const featureList: FeatureProps[] = [
     description:
       "Conecte facilmente suas fontes de dados e acelere resultados.",
   },
+  {
+    title: "Suporte Especializado",
+    description:
+      "Nossa equipe está pronta para ajudar você a extrair o máximo valor dos seus dados.",
+  },
+  {
+    title: "Visualização Avançada",
+    description:
+      "Crie dashboards interativos e relatórios personalizados para insights rápidos.",
+  },
+  {
+    title: "Escalabilidade",
+    description:
+      "Plataforma projetada para crescer com o seu negócio, sem limites.",
+  },
 ];
 
 export const Navbar = () => {
@@ -131,23 +146,21 @@ export const Navbar = () => {
               Funcionalidades
             </NavigationMenuTrigger>
             <NavigationMenuContent>
-              <div className="grid w-[600px] grid-cols-2 gap-5 p-4">
-                <ul className="flex flex-col gap-2">
-                  {featureList.map(({ title, description }) => (
-                    <li
-                      key={title}
-                      className="rounded-md p-3 text-sm hover:bg-muted"
-                    >
-                      <p className="mb-1 font-semibold leading-none text-foreground">
-                        {title}
-                      </p>
-                      <p className="line-clamp-2 text-muted-foreground">
-                        {description}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] ">
+                {featureList.map(({ title, description }) => (
+                  <li
+                    key={title}
+                    className="rounded-md p-3 text-sm hover:bg-muted"
+                  >
+                    <p className="mb-1 font-semibold leading-none text-foreground">
+                      {title}
+                    </p>
+                    <p className="line-clamp-2 text-muted-foreground">
+                      {description}
+                    </p>
+                  </li>
+                ))}
+              </ul>
             </NavigationMenuContent>
           </NavigationMenuItem>
 
