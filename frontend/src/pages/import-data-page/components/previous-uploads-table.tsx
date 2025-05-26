@@ -17,7 +17,7 @@ export const PreviousUploadsTable: React.FC = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center">
+      <div className="flex items-center justify-center h-full">
         <p>Carregando dados...</p>
       </div>
     );

@@ -21,7 +21,7 @@ import {
 import React, { useState } from "react";
 
 export const CalculationsTabContent: React.FC = () => {
-  const { data: emergyCalculations = [] } = useGetEmergyCalculations();
+  const { data: emergyCalculations = [], isLoading } = useGetEmergyCalculations();
   const [searchTerm, setSearchTerm] = useState("");
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,6 +74,14 @@ export const CalculationsTabContent: React.FC = () => {
       bgColor: "bg-indigo-50",
     },
   };
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <p>Carregando cálculos...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">

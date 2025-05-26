@@ -142,7 +142,7 @@ export const NewCalculationTabContent: React.FC = () => {
 
   if (isLoadingMatrices || isLoadingConfigs) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-full">
         <p>Carregando dados...</p>
       </div>
     );

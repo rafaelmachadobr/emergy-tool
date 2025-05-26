@@ -100,7 +100,7 @@ const DashboardPage: React.FC = () => {
   // Verifica se os dados ainda estão sendo carregados
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center h-screen">
+      <div className="flex items-center justify-center h-full">
         <p>Carregando dados...</p>
       </div>
     );
