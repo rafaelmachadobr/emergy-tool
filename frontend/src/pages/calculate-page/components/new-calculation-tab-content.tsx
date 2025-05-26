@@ -69,8 +69,8 @@ const configSchema = z.object({
 });
 
 export const NewCalculationTabContent: React.FC = () => {
-  const { data: matrices } = useGetMatrices();
-  const { data: configs } = useGetConfigs();
+  const { data: matrices, isLoading: isLoadingMatrices } = useGetMatrices();
+  const { data: configs, isLoading: isLoadingConfigs } = useGetConfigs();
   const { mutateAsync: addEmergyCalculate } = useAddEmergyCalculate();
   const { mutateAsync: addConfig } = useAddConfig();
 
@@ -138,6 +138,14 @@ export const NewCalculationTabContent: React.FC = () => {
             "Ocorreu um erro ao criar a configuração."
         );
       });
+  }
+
+  if (isLoadingMatrices || isLoadingConfigs) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p>Carregando dados...</p>
+      </div>
+    );
   }
 
   return (

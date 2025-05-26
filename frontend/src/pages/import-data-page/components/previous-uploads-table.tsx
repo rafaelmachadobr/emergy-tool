@@ -11,9 +11,17 @@ import { useGetMatrices } from "@/hooks/data/use-get-matrices";
 import { useNavigate } from "react-router-dom";
 
 export const PreviousUploadsTable: React.FC = () => {
-  const { data: matrices } = useGetMatrices();
+  const { data: matrices, isLoading } = useGetMatrices();
 
   const navigate = useNavigate();
+
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center">
+        <p>Carregando dados...</p>
+      </div>
+    );
+  }
 
   return (
     <Table>
