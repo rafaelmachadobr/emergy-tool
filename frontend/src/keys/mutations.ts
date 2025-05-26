@@ -15,3 +15,9 @@ export const configMutationKeys = {
   update: (id: number) => ["update-config", id],
   delete: (id: number) => ["delete-config", id],
 };
+
+export const emergyStatsMutationKeys = {
+  add: () => ["add-emergy-stat"],
+  update: (id: number) => ["update-emergy-stat", id],
+  delete: (id: number) => ["delete-emergy-stat", id],
+};

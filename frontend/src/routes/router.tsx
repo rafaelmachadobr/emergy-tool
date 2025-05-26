@@ -1,5 +1,5 @@
 import CalculatePage from "@/pages/calculate-page";
-import DashboardPage from "@/pages/DashboardPage";
+import DashboardPage from "@/pages/dashboard-page";
 import HelpPage from "@/pages/HelpPage";
 import ImportDataPage from "@/pages/import-data-page";
 import LandingPage from "@/pages/landing-page";

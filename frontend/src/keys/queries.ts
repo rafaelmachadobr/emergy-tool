@@ -12,3 +12,8 @@ export const configQueryKeys = {
   getAll: () => ["configs"],
   getOne: (id: number) => ["config", id],
 };
+
+export const emergyStatsQueryKeys = {
+  getAll: () => ["emergy-stats"],
+  getOne: (id: number) => ["emergy-stat", id],
+};
