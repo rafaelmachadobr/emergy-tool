@@ -12,23 +12,25 @@ import {
 import { useAuth } from "@/hooks/use-auth";
 
 export function ProfileDropdown() {
-  const { signOut } = useAuth();
+  const { signOut, user } = useAuth();
 
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button variant="ghost" className="relative h-8 w-8 rounded-full">
           <Avatar className="h-8 w-8">
-            <AvatarFallback>UN</AvatarFallback>
+            <AvatarFallback>
+              {user?.username.slice(0, 2).toUpperCase()}
+            </AvatarFallback>
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm leading-none font-medium">unip</p>
+            <p className="text-sm leading-none font-medium">{user?.username}</p>
             <p className="text-muted-foreground text-xs leading-none">
-              ti@aluno.unip.br
+              {user?.email}
             </p>
           </div>
         </DropdownMenuLabel>

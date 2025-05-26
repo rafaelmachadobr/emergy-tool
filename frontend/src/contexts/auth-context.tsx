@@ -6,6 +6,7 @@ import { toast } from "sonner";
 
 type AuthContextData = {
   isAuthenticated: boolean;
+  user?: UserProps;
   signIn: (credentials: SignInProps) => Promise<void>;
   signUp: (credentials: RegisterProps) => Promise<void>;
   signOut: () => void;
@@ -13,8 +14,8 @@ type AuthContextData = {
 };
 
 type UserProps = {
-  access: string;
-  refresh: string;
+  username: string;
+  email: string;
 };
 
 type SignInProps = {
@@ -39,9 +40,21 @@ function AuthProvider({ children }: AuthProviderProps) {
   const isAuthenticated = !!user;
   const [isLoading, setIsLoading] = useState(true);
 
+  async function fetchUserInfo(token: string): Promise<UserProps | undefined> {
+    try {
+      const response = await api.get("/user-info", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      return response.data;
+    } catch (error) {
+      console.log("Erro ao buscar informações do usuário:", error);
+      return undefined;
+    }
+  }
+
   useEffect(() => {
-    const access = Cookies.get("access");
-    const refresh = Cookies.get("refresh");
+    const accessCookie = Cookies.get("access");
+    const refreshCookie = Cookies.get("refresh");
 
     async function refreshAccessToken(refreshToken: string) {
       try {
@@ -57,18 +70,20 @@ function AuthProvider({ children }: AuthProviderProps) {
           sameSite: "strict",
         });
 
-        setUser({ access: newAccess, refresh: refreshToken });
+        const info = await fetchUserInfo(newAccess);
+
+        setUser(info);
         api.defaults.headers["Authorization"] = `Bearer ${newAccess}`;
       } catch (error) {
         console.log("Refresh token inválido ou expirado, removendo...");
-        signOut(false);
+        signOut();
       } finally {
         setIsLoading(false);
       }
     }
 
-    if (access && refresh) {
-      refreshAccessToken(refresh);
+    if (accessCookie && refreshCookie) {
+      refreshAccessToken(refreshCookie);
     } else {
       setIsLoading(false);
     }
@@ -93,7 +108,9 @@ function AuthProvider({ children }: AuthProviderProps) {
         sameSite: "strict",
       });
 
-      setUser({ access, refresh });
+      const info = await fetchUserInfo(access);
+
+      setUser(info);
       api.defaults.headers["Authorization"] = `Bearer ${access}`;
       toast.success("Logado com sucesso!");
     } catch (error) {
@@ -124,15 +141,12 @@ function AuthProvider({ children }: AuthProviderProps) {
     }
   }
 
-  function signOut(showToast = true) {
+  function signOut() {
     try {
-      if (window.confirm("Tem certeza que quer sair?")) {
-        Cookies.remove("access");
-        Cookies.remove("refresh");
-        setUser(undefined);
-        delete api.defaults.headers["Authorization"];
-        if (showToast) toast.success("Deslogado com sucesso!");
-      }
+      Cookies.remove("access");
+      Cookies.remove("refresh");
+      setUser(undefined);
+      delete api.defaults.headers["Authorization"];
     } catch {
       console.log("Erro ao sair");
     }
@@ -140,7 +154,7 @@ function AuthProvider({ children }: AuthProviderProps) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, signIn, signUp, signOut, isLoading }}
+      value={{ isAuthenticated, user, signIn, signUp, signOut, isLoading }}
     >
       {children}
     </AuthContext.Provider>

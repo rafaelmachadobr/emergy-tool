@@ -1,10 +1,5 @@
 import { LinkProps } from "react-router-dom";
 
-interface User {
-  name: string;
-  email: string;
-}
-
 interface BaseNavItem {
   title: string;
   badge?: string;
@@ -29,7 +24,6 @@ interface NavGroup {
 }
 
 interface SidebarData {
-  user: User;
   navGroups: NavGroup[];
 }
 

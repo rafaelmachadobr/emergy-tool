@@ -10,10 +10,6 @@ import {
 } from "lucide-react";
 
 export const sidebarData: SidebarData = {
-  user: {
-    name: "unip",
-    email: "ti@aluno.unip.br",
-  },
   navGroups: [
     {
       title: "Geral",
