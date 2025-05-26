@@ -35,7 +35,7 @@ import { StatsCard } from "./components/stats-card";
 const COLORS = ["#0C6E4E", "#4EAAAF", "#75C9C8", "#D3F1EC"];
 
 const DashboardPage: React.FC = () => {
-  const { data: emergyStats } = useGetEmergyStats();
+  const { data: emergyStats, isLoading } = useGetEmergyStats();
   const navigate = useNavigate();
 
   // Transformação dos dados para o PieChart
@@ -55,17 +55,17 @@ const DashboardPage: React.FC = () => {
     return [];
   }, [emergyStats]);
 
-  const weekDays = [
-    "Domingo",
-    "Segunda",
-    "Terça",
-    "Quarta",
-    "Quinta",
-    "Sexta",
-    "Sábado",
-  ];
-
   const areaChartData = React.useMemo(() => {
+    const weekDays = [
+      "Domingo",
+      "Segunda",
+      "Terça",
+      "Quarta",
+      "Quinta",
+      "Sexta",
+      "Sábado",
+    ];
+
     if (
       emergyStats &&
       emergyStats.daily_trends &&
@@ -95,7 +95,16 @@ const DashboardPage: React.FC = () => {
       }));
     }
     return [];
-  }, [emergyStats, weekDays]);
+  }, [emergyStats]);
+
+  // Verifica se os dados ainda estão sendo carregados
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <p>Carregando dados...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
