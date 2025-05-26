@@ -15,18 +15,18 @@ const CalculatePage: React.FC = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="calculations" className="w-full">
+      <Tabs defaultValue="newCalculation" className="w-full">
         <TabsList className="grid w-full grid-cols-2 mb-6">
-          <TabsTrigger value="calculations">Cálculos</TabsTrigger>
           <TabsTrigger value="newCalculation">Novo Cálculo</TabsTrigger>
+          <TabsTrigger value="calculations">Cálculos Realizados</TabsTrigger>
         </TabsList>
-
-        <TabsContent value="calculations" className="space-y-4">
-          <CalculationsTabContent />
-        </TabsContent>
 
         <TabsContent value="newCalculation" className="space-y-6">
           <NewCalculationTabContent />
+        </TabsContent>
+
+        <TabsContent value="calculations" className="space-y-4">
+          <CalculationsTabContent />
         </TabsContent>
       </Tabs>
     </div>
